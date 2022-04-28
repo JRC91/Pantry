@@ -1,29 +1,89 @@
 'use strict'
 
-const {db, models: {User} } = require('../server/db')
+const {db, User, Food, Ingredient, Recipe } = require('../server/db')
 
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
+
+
+ const users = [
+  {
+    username: "cody",
+    password: "123",
+
+  },
+  {
+    username: "murphy",
+    password: "123",
+  },
+];
+
+const foods = [
+  {
+    name: 'Eggs',
+    type: 'egg',
+  },
+  {
+    name: 'Bacon',
+    type: 'red meat'
+  },
+  {
+    name: 'Potatos',
+    type: 'vegetable',
+  },
+  {
+    name: 'Apples',
+    type: 'fruit',
+  },
+  {
+    name: 'Beef Chop Meat',
+    type: 'red meat',
+  },
+  {
+    name: 'Tuna Fish',
+    type: 'fish',
+  },
+  {
+    name: 'Banana',
+    type: 'fruit',
+  },
+  {
+    name: 'Milk',
+    type: 'dairy',
+  },
+  {
+    name: 'Black Beans',
+    type: 'bean',
+  },
+  {
+    name: 'Olive Oil',
+    type: 'oil',
+  },
+  {
+    name: 'Penne',
+    type: 'grain',
+  },
+]
+
+
 async function seed() {
-  await db.sync({ force: true }) // clears db and matches models to tables
-  console.log('db synced!')
+  await db.sync({ force: true }); // clears db and matches models to tables
+  console.log("db synced!");
 
   // Creating Users
-  const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
-  ])
-
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
-  }
+  await Promise.all(
+    users.map((user) => {
+      return User.create(user);
+    })
+  );
+  await Promise.all(
+    foods.map((food) => {
+      return Food.create(food);
+    })
+  );
+  console.log(`seeded ${users.length} users and ${foods.length} foods!`);
 }
 
 /*
