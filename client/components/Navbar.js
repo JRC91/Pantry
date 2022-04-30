@@ -1,9 +1,17 @@
-import React from 'react'
+import { render } from 'express/lib/response'
+import React, { useEffect } from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import { ProgressPlugin } from 'webpack'
 import {logout} from '../store'
+import { setPantryThunk } from '../store/pantry'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = (props) => {
+  useEffect(() => {
+
+  },[])
+
+return  (
   <div>
     <h1>FS-App-Template</h1>
     <nav>
@@ -11,7 +19,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
+          <Link to='/foodselection'>Food Stock</Link>
+          <Link to='/pantry'>Pantry</Link>
+          <a href="#" onClick={props.handleClick}>
             Logout
           </a>
         </div>
@@ -26,7 +36,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     <hr />
   </div>
 )
-
+      }
 /**
  * CONTAINER
  */
@@ -36,12 +46,10 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+const mapDispatch = (dispatch) => ({
+  handleClick: () => dispatch(logout()),
+  fetchPantry: (id) => dispatch(setPantryThunk(id)),
+
+})
 
 export default connect(mapState, mapDispatch)(Navbar)

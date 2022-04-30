@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const {Recipe, Ingredient} = require('../db')
 module.exports = router
+const {requireToken, isAdmin} = require('./gatekeep')
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try{
     const recipes = Recipe.findAll()
     res.json(recipes)
@@ -10,7 +11,7 @@ router.get('/', async (req, res, next) => {
   catch(err) {next(err)}
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', requireToken, isAdmin, async (req, res, next) => {
   try{
     const recipe = Recipe.findByPk(req.params.id)
     res.json(recipe)
@@ -18,7 +19,7 @@ router.get('/:id', async (req, res, next) => {
   catch(err) {next(err)}
 })
 
-router.post('/add', async (req, res, next) => {
+router.post('/add', requireToken, isAdmin, async (req, res, next) => {
   try{
     const recipe = Recipe.create(req.body)
     res.json(recipe)
@@ -26,7 +27,7 @@ router.post('/add', async (req, res, next) => {
   catch(err) {next(err)}
 })
 
-router.put('/:id/edit', async (req, res, next) => {
+router.put('/:id/edit',requireToken, isAdmin, async (req, res, next) => {
     try {
       const recipe = Recipe.findByPk(req.params.id)
       const updateRecipe = recipe.update(req.body)
@@ -35,7 +36,7 @@ router.put('/:id/edit', async (req, res, next) => {
     catch(err) {next(err)}
 })
 
-router.delete(('/:id/delete'), async (req, res, next) => {
+router.delete(('/:id/delete'), requireToken, isAdmin, async (req, res, next) => {
   try {
     let deleteRecipe = await Recipe.findByPk(req.params.id)
     let deletedRecipe = await deleteRecipe.destroy()
@@ -44,7 +45,7 @@ router.delete(('/:id/delete'), async (req, res, next) => {
   catch (err){next(err)}
 })
 
-router.put(('/:id/addfood'),  async (req, res, next) => {
+router.put(('/:id/addfood'),  requireToken, isAdmin, async (req, res, next) => {
   try {
     for(let i = 0; i < req.body.ingredients.length; i++){
       let ingredient = req.body.ingredients[i]

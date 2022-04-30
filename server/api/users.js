@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const { del } = require('express/lib/application')
 const { User, Ingredient, Food } = require('../db')
+const {requireToken, isAdmin} = require('./gatekeep')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
@@ -17,7 +18,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id/pantry', async (req, res, next) => {
+router.get('/:id/pantry', requireToken, isAdmin, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
       where: {id: req.params.id},
@@ -34,7 +35,7 @@ router.get('/:id/pantry', async (req, res, next) => {
 })
 
 
-router.post('/:id/pantry/', async (req, res, next) => {
+router.post('/:id/pantry/', requireToken, isAdmin, async (req, res, next) => {
   try {
     console.log(req.body, 'this is reqbody');
 
@@ -47,7 +48,7 @@ router.post('/:id/pantry/', async (req, res, next) => {
   }
 });
 
-router.delete('/:id/pantry/', async (req, res, next) => {
+router.delete('/:id/pantry/', requireToken, isAdmin, async (req, res, next) => {
   try {
     console.log(req.body, 'this is reqbody');
 
@@ -63,7 +64,7 @@ router.delete('/:id/pantry/', async (req, res, next) => {
   }
 });
 
-router.put('/:id/pantry/', async (req, res, next) => {
+router.put('/:id/pantry/', requireToken, isAdmin, async (req, res, next) => {
   try {
     console.log(req.body, 'this is reqbody');
 
