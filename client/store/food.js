@@ -1,6 +1,15 @@
 import axios from 'axios';
-
+const token = window.localStorage.getItem('token')
 //mostly for the All Food and EditFood pages on the Admin
+let reqInstance = axios.create({
+  headers: {
+    Authorization : window.localStorage.getItem('token')
+    }
+  }
+)
+//reqInstance replaces axios and has the Authorization placed in. Saves time.
+
+
 
 const initialState = [];
 
@@ -46,7 +55,7 @@ export const filterFood = (food) => {
 export const setFoodThunk = () => {
   return async function (dispatch) {
     try {
-      let response = await axios.get('/api/foods');
+      let response = await reqInstance.get('/api/food');
       let food = response.data;
       dispatch(setFood(food));
     } catch (err) {
@@ -57,7 +66,10 @@ export const setFoodThunk = () => {
 export const addFoodThunk = () => {
   return async function (dispatch) {
     try {
-      let response = await axios.post(`/api/food/`);
+      let response = await reqInstance.post(`/api/food/` , {
+        headers: {
+        authorization: token
+      }})
       let food = response.data
       dispatch(AddFood(food));
     } catch (err) {
@@ -69,7 +81,10 @@ export const addFoodThunk = () => {
 export const deleteFoodThunk = (id) => {
   return async function (dispatch) {
     try {
-      await axios.delete(`/api/food/${id}`);
+      await reqInstance.delete(`/api/food/${id}`, {
+        headers: {
+        authorization: token
+      }});
       await dispatch(deleteFood(id));
     } catch (err) {
       console.log(err);
@@ -80,7 +95,12 @@ export const deleteFoodThunk = (id) => {
 export const editFoodThunk = (food) => {
   return async function (dispatch) {
     try {
-      let response = await axios.put(`/api/products/${food.id}`, food);
+      let response = await reqInstance.put(`/api/food/${food.id}`,{
+        headers: {
+        authorization: token
+      },
+      food
+    });
       let updateFood = response.data;
       dispatch(editFood(updateFood));
     } catch (err) {

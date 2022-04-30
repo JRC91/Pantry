@@ -4,8 +4,8 @@ import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import {me} from './store'
-import AllFood from './allFood'
-import Pantry from './pantryView'
+import AllFood from './components/allFood'
+import Pantry from './components/pantryView'
 /**
  * COMPONENT
  */

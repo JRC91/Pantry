@@ -17,6 +17,7 @@ const {db, User, Food, Ingredient, Recipe } = require('../server/db')
   {
     username: "murphy",
     password: "123",
+    isAdmin: true,
   },
 ];
 

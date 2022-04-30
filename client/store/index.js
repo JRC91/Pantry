@@ -14,6 +14,7 @@ const reducer = combineReducers({
   pantry: pantry,
   food: food,
   user: user,
+  recipes: recipes
 
 })
 const middleware = composeWithDevTools(

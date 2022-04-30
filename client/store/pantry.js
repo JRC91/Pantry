@@ -1,15 +1,27 @@
 import axios from 'axios';
-
+const token = window.localStorage.getItem('token')
 //Input for the axios routes is up to being change, routes work with postman/insomnia
+
+let reqInstance = axios.create({
+  headers: {
+    Authorization : window.localStorage.getItem('token')
+    }
+  }
+)
+
+
+
+
+
 
 const initialState = [];
 
 //Action Constants
-const SetPantry = 'SET_CART';
-const ClearPantry = 'CLEAR_CART';
-const RemoveFromPantry = 'REMOVE_FROM_CART';
-const AddToPantry = 'ADD_TO_CART';
-const UpdateQuantityPantry = 'UPDATE_QUANTITY_CART';
+const SetPantry = 'SET_PANTRY';
+const ClearPantry = 'CLEAR_PANTRY';
+const RemoveFromPantry = 'REMOVE_FROM_PANTRY';
+const AddToPantry = 'ADD_TO_PANTRY';
+const UpdateQuantityPantry = 'UPDATE_QUANTITY_PANTRY';
 
 //Action Creators
 const setPantry = (pantry) => {
@@ -45,7 +57,7 @@ const updatePantry = (ingredient) => {
 export const setPantryThunk = (id) => {
   return async function (dispatch) {
     try {
-      let response = await axios.get(`/api/users/${id}/pantry`);
+      let response = await reqInstance.get(`/api/users/${id}/pantry`)
       let pantry = response.data;
       dispatch(setPantry(pantry));
     } catch (err) {
@@ -57,7 +69,7 @@ export const setPantryThunk = (id) => {
 export const clearPantryThunk = (id) => {
   return async function (dispatch) {
     try {
-      await axios.delete(`/api/users/${id}/pantry/clear`);
+      await reqInstance.delete(`/api/users/${id}/pantry/clear`)
       dispatch(clearPantry());
     } catch (err) {
       console.log(err);
@@ -67,24 +79,23 @@ export const clearPantryThunk = (id) => {
 
 //this will complete the order and clear the state for this pantry
 
-export const removeFromPantryThunk = (id, ingredient) => {
+export const removeFromPantryThunk = (id, pantry) => {
   return async function (dispatch) {
     try {
-      await axios.delete(`/api/users/${id}/pantry/${ingredient.id}/remove`);
-      dispatch(removeFromPantry(ingredient));
+      await reqInstance.delete(`/api/users/${id}/pantry/${pantry.id}/remove`)
+      dispatch(removeFromPantry(pantry));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-export const addToPantryThunk = (id, ingredientId, inventory, price) => {
+export const addToPantryThunk = (id, foodId, quantity) => {
   return async function (dispatch) {
     try {
-      let response = await axios.post(`/api/users/${id}/pantry/add`, {
-        ingredientId,
-        inventory,
-        price,
+      let response = await reqInstance.post(`/api/users/${id}/pantry/add`, {
+        foodId,
+        quantity,
       });
       const newIngredient = response.data;
       dispatch(addToPantry(newIngredient));
@@ -118,7 +129,7 @@ export default function pantryReducer(state = initialState, action) {
           ingredient.id === action.ingredient.id ? action.ingredient : ingredient
         )
     case AddToPantry:
-      return action.newIngredient;
+      return [...state, action.newIngredient]
     case ClearPantry:
       return initialState;
     case RemoveFromPantry:

@@ -71,7 +71,7 @@ export function Pantry(props) {
               <div key={food.id}>
                 <img src={food.imageUrl} className="photo" />
                 <h4>
-                    {`${food.ingredient.quantity} ${food.name}`}
+                    {` ${food.name}`}
                   <input
           onChange={handleChange}
           type="number"

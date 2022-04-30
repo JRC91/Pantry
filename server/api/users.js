@@ -1,6 +1,5 @@
 const router = require('express').Router()
-const { del } = require('express/lib/application')
-const { User, Ingredient, Food } = require('../db')
+const { User, Pantry, Food, Ingredient } = require('../db')
 const {requireToken, isAdmin} = require('./gatekeep')
 module.exports = router
 
@@ -18,41 +17,45 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
   }
 })
 
-router.get('/:id/pantry', requireToken, isAdmin, async (req, res, next) => {
+router.get('/:id/pantry', requireToken, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id, {
+    const user = await User.findOne({
       where: {id: req.params.id},
       attributes: ['id', 'username'],
       include: {
-        model: Ingredient,
-        include: Food
+        model: Food
       }
     })
-    res.json(user.ingredients)
+    res.json(user.food)
   } catch (err) {
     next(err)
   }
 })
 
 
-router.post('/:id/pantry/', requireToken, isAdmin, async (req, res, next) => {
+router.post('/:id/pantry/add', requireToken, async (req, res, next) => {
   try {
     console.log(req.body, 'this is reqbody');
-
-    let newFood = await Ingredient.create(
-    req.body);
-
-    res.send(newFood);
+    let {foodId} = req.body
+    let newFood = await Pantry.create({
+      foodId: foodId,
+      userId: req.params.id
+    });
+    let pantry = await User.findOne({
+      where: {id: req.params.id},
+      include: Food
+    })
+    res.send(pantry.food);
   } catch (err) {
     next(err);
   }
 });
 
-router.delete('/:id/pantry/', requireToken, isAdmin, async (req, res, next) => {
+router.delete('/:id/pantry/', requireToken, async (req, res, next) => {
   try {
     console.log(req.body, 'this is reqbody');
 
-    let byeFood = await Ingredient.findOne({where: {
+    let byeFood = await Pantry.findOne({where: {
       userId: req.params.id,
       id: req.body.id
     }});
@@ -64,11 +67,11 @@ router.delete('/:id/pantry/', requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
-router.put('/:id/pantry/', requireToken, isAdmin, async (req, res, next) => {
+router.put('/:id/pantry/', requireToken, async (req, res, next) => {
   try {
     console.log(req.body, 'this is reqbody');
 
-    let changedFood = await Ingredient.findOne({where: {
+    let changedFood = await Pantry.findOne({where: {
       userId: req.params.id,
       id: req.body.food.id
     }});

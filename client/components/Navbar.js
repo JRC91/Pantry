@@ -1,21 +1,21 @@
-import { render } from 'express/lib/response'
+
 import React, { useEffect } from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import { ProgressPlugin } from 'webpack'
 import {logout} from '../store'
 import { setPantryThunk } from '../store/pantry'
 
 const Navbar = (props) => {
   useEffect(() => {
-
-  },[])
+    if(props.auth){
+    props.fetchPantry(props.auth.id)
+  }},[])
 
 return  (
   <div>
     <h1>FS-App-Template</h1>
     <nav>
-      {isLoggedIn ? (
+      {props.isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>

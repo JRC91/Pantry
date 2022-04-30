@@ -3,7 +3,7 @@ const db = require('../db')
 
 
 
-const Ingredient = db.define('ingredient', {
+const Pantry = db.define('pantry', {
   quantity: {
     type: Sequelize.INTEGER,
     // allowNull: false,
@@ -24,4 +24,4 @@ const Ingredient = db.define('ingredient', {
 
 });
 
-module.exports = Ingredient;
+module.exports = Pantry;

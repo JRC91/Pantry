@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addToPantryThunk, updateQuantityPantryThunk } from '../store/'
-import { setFoodThunk } from '../store/';
+import { addToPantryThunk, updateQuantityPantryThunk } from '../store/pantry'
+import { setFoodThunk } from '../store/food';
 
 
 export function AllFood(props) {
@@ -10,11 +10,13 @@ export function AllFood(props) {
 
   useEffect(() => {
     props.fetchFood();
+    setPantry(props.foods)
     if (props.user.id){
-      let userAddedAlready = props.user.ingredients
-      let foodList = props.food
+      let userAddedAlready = props.pantry
+      let foodList = props.foods
+      if(props.pantry.length){
       let containsAll = foodList.filter(i => !userAddedAlready.includes(i));
-      setPantry(containsAll) }
+      setPantry(containsAll) }}
   }, []);
 
   const checkIt = (food) => {
@@ -24,7 +26,7 @@ export function AllFood(props) {
       props.addToPantry(userId, food.id);
     }
 
-
+console.log(props)
   if (!props.foods.length) {
     return (
       <div>
@@ -67,14 +69,14 @@ export function AllFood(props) {
 }}
 
 const mapStateToProps = (reduxState) => ({
-  foods: reduxState.foods,
+  foods: reduxState.food,
   user: reduxState.auth,
   pantry: reduxState.pantry,
 });
 const mapDispatchToProps = (dispatch) => ({
   fetchFood: () => dispatch(setFoodThunk()),
-  addToPantry: (id, food, quantity, price) =>
-    dispatch(addToPantryThunk(id, food, inventory, price)),
+  addToPantry: (id, food, quantity) =>
+    dispatch(addToPantryThunk(id, food)),
   updatePantry: (id, foodId, qty) =>
     dispatch(updateQuantityPantryThunk(id, foodId, qty)),
 });
