@@ -53,7 +53,9 @@ User.findByToken = async function(token) {
 
     const {id} = await jwt.verify(token, process.env.JWT)
 
-    const user = await User.findByPk(id)
+    const user = await User.findByPk(id, {
+      attributes: {exclude:['password']}
+    })
     if (!user) {
       throw 'nooo'
     }

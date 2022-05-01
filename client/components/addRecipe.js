@@ -118,7 +118,7 @@ export class RecipeCreator extends React.Component {
       <option value="lunch">Lunch</option>
       <option value="dinner">Dinner</option>
       <option value="dessert">Dessert</option>
-      <option value="snack">Dinner</option>
+      <option value="snack">Snack</option>
       </select>
 
       <h3>Type of Course:</h3>
@@ -126,9 +126,9 @@ export class RecipeCreator extends React.Component {
       <option value="main">Main</option>
       <option value="side">Side</option>
       <option value="dressing">Dressing</option>
-      <option value="gravy">Dinner</option>
+      <option value="gravy">Sauce</option>
       <option value="soup">Dessert</option>
-      <option value="salad">Dinner</option>
+      <option value="salad">Salad</option>
       </select>
 
       <span><h3>Image (URL):</h3></span>

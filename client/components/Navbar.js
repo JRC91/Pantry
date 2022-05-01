@@ -22,6 +22,7 @@ return  (
           <Link to='/foodselection'>Food Stock</Link>
           <Link to='/pantry'>Pantry</Link>
           <Link to='/recipemaker'>Make a Recipe</Link>
+          <Link to='/recipes'>See Avaiable Recipes</Link>
           <a href="#" onClick={props.handleClick}>
             Logout
           </a>

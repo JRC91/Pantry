@@ -1,5 +1,7 @@
 const router = require('express').Router()
-const { User, Ingredient, Food, Pantry } = require('../db')
+const { Sequelize } = require('sequelize')
+const { User, Ingredient, Food, Pantry, Recipe, db } = require('../db')
+const { QueryTypes } = require('sequelize')
 const {requireToken, isAdmin} = require('./gatekeep')
 module.exports = router
 
@@ -84,3 +86,36 @@ router.put('/:id/pantry/', requireToken, async (req, res, next) => {
     next(err);
   }
 });
+
+//includes the recipes and the associated ingredients that are shared with user's pantry, ordered for some reason
+router.get('/:id/curated',  async (req, res, next) => {
+  let number = req.params.id
+  try {
+    let recipes = await Recipe.findAll({
+      include: [{
+        model: Food,
+        required: true,
+        left: true,
+        include: [{
+          model:User,
+          where: {id: req.params.id},
+          required: false,
+          attributes: ['id'],
+          include: [{
+            model: Food,
+            required: true,
+            attributes: []
+          }]
+        }],
+      }],
+     })
+     console.log(recipes)
+     res.send(recipes)
+  }
+  catch (err) {
+    next(err);
+  }
+})
+//limit and offset might be useful if the database grows more
+
+

@@ -20,6 +20,12 @@ form div {
   display: inline-block;
 }
 
+span {
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 #myInput {
   background-image: url("/css/searchicon.png");
   background-position: 10px 12px;
@@ -49,4 +55,23 @@ form div {
 }
 #myUL li a:hover:not(.header) {
   background-color: #eee;
+}
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  left: 180 px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.content {
+  padding: 0 18px;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  text-align: center;
 }

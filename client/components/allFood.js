@@ -6,7 +6,7 @@ import { setFoodThunk } from '../store/food';
 
 
 export function AllFood(props) {
-  let [foodSelection, setFoods] = useState([]);
+  let [foodSelection, setFoods] = useState([])
   let [userPantry, setPantry] = useState([]);
   let [renderFoods, setRender] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -32,12 +32,6 @@ export function AllFood(props) {
     setPantry(props.pantry)
   }
 
-  useEffect((previousState) => {
-    if (previousState !== props.pantry) {
-      setPantry(props.pantry || []);
-    }
-  });
-
 
   const renderTheFood = async () => {
     console.log('render')
@@ -60,7 +54,6 @@ export function AllFood(props) {
           return true
         }
       })
-      setIsLoading(false)
       setRender(containsAll) }}
   }
 
@@ -75,7 +68,7 @@ export function AllFood(props) {
   // const prevAmount = usePrevious(props.foods)
   // useEffect( () => { loadPantry(userPantry) }, [userPantry] )
   // useEffect( () => { loadTheFood(foodSelection) }, [foodSelection] );
-  useEffect( () => { loadTheFood(), loadPantry(), renderTheFood()}, [] );
+  useEffect( () => {loadTheFood(), loadPantry(), renderTheFood()}, [props.foods] );
   useEffect((previousState) => {
     if (previousState !== props.pantry) {
       setPantry(props.pantry || []);

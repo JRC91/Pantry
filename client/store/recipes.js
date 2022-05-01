@@ -52,9 +52,9 @@ export const setRecipesThunk = () => {
 export const selectedRecipesThunk = (id) => {
     return async function (dispatch) {
       try {
-        let response = await reqInstance.get(`/api/users/${id}/recipes`)
+        let response = await reqInstance.get(`/api/users/${id}/curated`)
         let recipes = response.data
-        dispatch(SelectedRecipes(recipes))
+        dispatch(selectedRecipes(recipes))
       }
       catch (err){
         console.log(err)
