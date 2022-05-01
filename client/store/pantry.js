@@ -1,5 +1,5 @@
 import axios from 'axios';
-const token = window.localStorage.getItem('token')
+
 //Input for the axios routes is up to being change, routes work with postman/insomnia
 
 let reqInstance = axios.create({
@@ -79,11 +79,11 @@ export const clearPantryThunk = (id) => {
 
 //this will complete the order and clear the state for this pantry
 
-export const removeFromPantryThunk = (id, pantry) => {
+export const removeFromPantryThunk = (id, foodId) => {
   return async function (dispatch) {
     try {
-      await reqInstance.delete(`/api/users/${id}/pantry/${pantry.id}/remove`)
-      dispatch(removeFromPantry(pantry));
+      await reqInstance.delete(`/api/users/${id}/pantry/${foodId}`)
+      dispatch(removeFromPantry(foodId));
     } catch (err) {
       console.log(err);
     }
@@ -133,7 +133,7 @@ export default function pantryReducer(state = initialState, action) {
     case ClearPantry:
       return initialState;
     case RemoveFromPantry:
-      return state.filter((ingredient) => ingredient.id !== action.ingredient.id);
+      return state.filter((ingredient) => ingredient.id !== action.ingredient);
     default:
       return state;
   }

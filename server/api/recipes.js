@@ -5,7 +5,7 @@ const {requireToken, isAdmin} = require('./gatekeep')
 
 router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try{
-    const recipes = Recipe.findAll()
+    const recipes = await Recipe.findAll()
     res.json(recipes)
   }
   catch(err) {next(err)}
@@ -13,15 +13,27 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
 
 router.get('/:id', requireToken, isAdmin, async (req, res, next) => {
   try{
-    const recipe = Recipe.findByPk(req.params.id)
+    const recipe = await Recipe.findByPk(req.params.id)
     res.json(recipe)
   }
   catch(err) {next(err)}
 })
 
-router.post('/add', requireToken, isAdmin, async (req, res, next) => {
+router.post('/add', requireToken, async (req, res, next) => {
   try{
-    const recipe = Recipe.create(req.body)
+    console.log(req.body, 'reqbody for create Recipe')
+    const recipe = await Recipe.create(req.body.recipe)
+    console.log(recipe, 'can I see')
+    if(req.body.ingredients.length){
+      req.body.ingredients.map(async (ingredient) => {
+        if(ingredient !== null){
+        await Ingredient.create({
+          recipeId: recipe.id,
+          foodId: ingredient.id
+        })}
+      })
+    }
+    await recipe.reload()
     res.json(recipe)
   }
   catch(err) {next(err)}
@@ -29,7 +41,7 @@ router.post('/add', requireToken, isAdmin, async (req, res, next) => {
 
 router.put('/:id/edit',requireToken, isAdmin, async (req, res, next) => {
     try {
-      const recipe = Recipe.findByPk(req.params.id)
+      const recipe = await Recipe.findByPk(req.params.id)
       const updateRecipe = recipe.update(req.body)
       res.json(updateRecipe)
     }

@@ -6,6 +6,10 @@ import Home from './components/Home';
 import {me} from './store'
 import AllFood from './components/allFood'
 import Pantry from './components/pantryView'
+import  RecipeCreator  from './components/addRecipe';
+
+
+
 /**
  * COMPONENT
  */
@@ -24,6 +28,7 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/foodselection" component={AllFood} />
             <Route path="/pantry" component={Pantry} />
+            <Route path='/recipemaker' component={RecipeCreator} />
             <Redirect to="/home" />
           </Switch>
         ) : (

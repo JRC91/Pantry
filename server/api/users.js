@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { User, Pantry, Food, Ingredient } = require('../db')
+const { User, Ingredient, Food, Pantry } = require('../db')
 const {requireToken, isAdmin} = require('./gatekeep')
 module.exports = router
 
@@ -35,7 +35,7 @@ router.get('/:id/pantry', requireToken, async (req, res, next) => {
 
 router.post('/:id/pantry/add', requireToken, async (req, res, next) => {
   try {
-    console.log(req.body, 'this is reqbody');
+    console.log(req.body, 'this is reqbody for Pantry Add');
     let {foodId} = req.body
     let newFood = await Pantry.create({
       foodId: foodId,
@@ -51,13 +51,13 @@ router.post('/:id/pantry/add', requireToken, async (req, res, next) => {
   }
 });
 
-router.delete('/:id/pantry/', requireToken, async (req, res, next) => {
+router.delete('/:id/pantry/:foodId', requireToken, async (req, res, next) => {
   try {
-    console.log(req.body, 'this is reqbody');
+    console.log(req.params, 'this is reqbody for delete Pantry');
 
     let byeFood = await Pantry.findOne({where: {
       userId: req.params.id,
-      id: req.body.id
+      foodId: req.params.foodId
     }});
     let deleted = await byeFood.destroy()
 

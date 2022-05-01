@@ -19,9 +19,10 @@ export function Pantry(props) {
     return ref.current;
   }
 
-  const removeItem = (id) => {
+  const removeItem = (userId, foodId) => {
     let pantryCopy = [...pantry];
-    pantryCopy = pantryCopy.filter((item) => item.id !== id);
+    pantryCopy = pantryCopy.filter((item) => item.id !== foodId);
+    props.removeFood(userId, foodId)
     setPantry(pantryCopy);
   };
 
@@ -30,18 +31,18 @@ export function Pantry(props) {
     quantityArr[evt.target.name]=evt.target.value
   };
 
-  const handleSubmit = (product) => {
+  const handleSubmit = (pantryItem) => {
     //check to see if product is in pantry if so increment qty of the pantry if not add item to the pantry
 
     const pantry = props.pantry;
     const userId = props.auth.id;
-    let filter = pantry.filter((food) => food.id === product.id);
+    let filter = pantry.filter((food) => food.id === pantryItem.id);
     if (filter.length) {
       let newquantity = (1 *  quantity);
-      if(newquantity > product.quantity){
-        newquantity = product.quantity
+      if(newquantity > pantryItem.quantity){
+        newquantity = pantryItem.quantity
       }
-      props.updateCart(userId, product.id, newquantity);
+      props.updateCart(userId, pantryItem.id, newquantity);
     }
     }
 
@@ -89,7 +90,7 @@ export function Pantry(props) {
                   <button
                     type="submit"
                     className="delete"
-                    onClick={() => removeItem(food.id)}
+                    onClick={() => removeItem(props.auth.id, food.id)}
                   >
                     X
                   </button>
@@ -109,7 +110,7 @@ const mapStateToProps = (reduxState) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchPantry: (id) => dispatch(setPantryThunk(id)),
-  removeFood: (id, food) => dispatch(removeFromPantryThunk(id, food)),
+  removeFood: (id, foodId) => dispatch(removeFromPantryThunk(id, foodId)),
   clearPantry: (id) => dispatch(clearPantryThunk(id)),
   changeQuantity: (id) => dispatch(updateQuantityPantryThunk(id)),
   updatePantry: (id, foodId, qty) =>
