@@ -91,7 +91,7 @@ router.put('/:id/pantry/', requireToken, async (req, res, next) => {
 });
 
 //includes the recipes and the associated ingredients that are shared with user's pantry, ordered for some reason
-router.get('/:id/curated',  async (req, res, next) => {
+router.get('/:id/curated', requireToken, async (req, res, next) => {
   let number = req.params.id
   try {
     let recipes = await Recipe.findAll({
