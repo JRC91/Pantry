@@ -71,7 +71,7 @@ export const addFoodThunk = () => {
         authorization: token
       }})
       let food = response.data
-      dispatch(AddFood(food));
+      dispatch(addFood(food));
     } catch (err) {
       console.log(err);
     }
@@ -115,7 +115,7 @@ export default function foodReducer(state = initialState, action){
     case SetFood:
       return action.food
     case AddFood:
-      return [...state, action.food]
+      return action.food
     case DeleteFood:
       return state.filter((food) => food.id !== action.food.id)
     case EditFood:

@@ -7,8 +7,10 @@ const Food = db.define('food', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
     validate: {
       notEmpty: true,
+
     },
   },
   type : {
@@ -19,7 +21,7 @@ const Food = db.define('food', {
       isIn: {
 
         args: [["vegetable", "fruit", "red meat", "poultry",
-        "shellfish", "fish", "dairy", "egg", "grain", "bean", "nut", 'herb', 'spice', 'oil', 'dressing', 'stock'
+        "shellfish", "fish", "dairy", "egg", "grain", "bean", "nut", 'herb', 'spice', 'oil', 'dressing', 'stock', 'soup', 'condiment'
       ]],
         msg: "Must have a food group!",
 

@@ -94,11 +94,11 @@ export class RecipeCreator extends React.Component {
       <div className="entryForm">
          <form onChange={this.handleChange}>
       <span><h3>Recipe Name:</h3></span>
-      <span><input type="text" name="name" value={recipe.name} /></span>
+      <span><input type="text" name="name" value={recipe.name} /></span> <br/>
 
-      <span><h3>Description:</h3></span>
-      <span> <input type="text" name="description" value={recipe.lastName}  />
-      </span><br />
+      <h3>Description:</h3>
+      <span><textarea rows="2" cols="50"  name="description" value={recipe.lastName}  /> </span>
+      <br />
       <span><h3>Cuisine:</h3></span>
       <span><input type="text" name="cuisine" value={recipe.recipe}  /></span>
 
@@ -108,42 +108,49 @@ export class RecipeCreator extends React.Component {
       <span><h3>Duration (minutes:)</h3></span>
       <span><input type="number" step='1' placeholder='0'  name="duration"  min="0" max="480" /> </span>
 
-      <h3>Written Guide:</h3>
-      <textarea rows="4" cols="50" name="guide" value={recipe.guide}  /> <br />
-
-      <h3>Time of Day:</h3>
-      <select name='day'>
+      <span><h3>Time of Day:</h3> </span>
+     <span> <select name='day'>
       <option value="breakfast">Breakfast</option>
       <option value="brunch">Brunch</option>
       <option value="lunch">Lunch</option>
       <option value="dinner">Dinner</option>
       <option value="dessert">Dessert</option>
       <option value="snack">Snack</option>
-      </select>
+      </select> </span>
 
-      <h3>Type of Course:</h3>
-      <select name='course'>
+      <span> <h3>Type of Course:</h3></span>
+      <span> <select name='course'>
       <option value="main">Main</option>
       <option value="side">Side</option>
       <option value="dressing">Dressing</option>
       <option value="gravy">Sauce</option>
       <option value="soup">Dessert</option>
       <option value="salad">Salad</option>
-      </select>
+      </select></span>
+
+      <h3>Written Guide:</h3>
+      <textarea rows="8" cols="100" name="guide" value={recipe.guide}  /> <br />
+
+
+
+
+
 
       <span><h3>Image (URL):</h3></span>
       <span><input type="text" placeholder="https://i.imgur.com/zmPe3Wa.jpeg" name="imageUrl" value={recipe.imageUrl}  /></span><br />
-
       <button onClick={this.handleSubmit}>
-        Submit Recipe
+      Submit Recipe
       </button>
+
+      <br/>
       <span><h3>Ingredients:</h3></span>
       {this.state.ingredients.map((ingredient) => {
       if(ingredient !== null){
-      return <p key={ingredient.id}>{ingredient.name}</p>}})}
+      return <span><p key={ingredient.id}>{ingredient.name}</p></span>}})}
 
      {/* <span><button type="button" onClick={this.handleSubmit}>Submit</button> </span> */}
       </form>
+      <div className='foodContainer' >
      {this.state.foods ? this.state.foods.map((food) => (
                 <div className="foodItem" key={food.id}>
                   <img src={food.imageUrl} className="photo" />
@@ -170,6 +177,7 @@ export class RecipeCreator extends React.Component {
 
                   </h2>
                 </div>)) : <p>Loading Ingredinets</p>}
+                        </div>
 
       </div>
     )

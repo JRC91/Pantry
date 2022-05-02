@@ -31,7 +31,7 @@ const foods = [
     type: 'red meat'
   },
   {
-    name: 'Potatos',
+    name: 'Potatoes',
     type: 'vegetable',
   },
   {
@@ -65,6 +65,66 @@ const foods = [
   {
     name: 'Penne',
     type: 'grain',
+  },
+  {
+    name: 'Onion',
+    type: 'vegetable',
+  },
+  {
+    name: 'Tomatoes',
+    type: 'vegetable',
+  },
+  {
+    name: 'Whole Grain Bread',
+    type: 'grain',
+  },
+  {
+    name: 'Yogurt',
+    type: 'dairy',
+  },
+  {
+    name: 'Swiss Cheese',
+    type: 'dairy',
+  },
+  {
+    name: 'Peanuts',
+    type: 'nut',
+  },
+  {
+    name: 'Chicken',
+    type: 'poultry',
+  },
+  {
+    name: 'Lobster',
+    type: 'shellfish',
+  },
+  {
+    name: 'Butter',
+    type: 'dairy',
+  },
+  {
+    name: 'Red Pepper Spice',
+    type: 'spice',
+  },
+  {
+    name: 'Green Peppers',
+    type: 'vegetable',
+  },
+  {
+    name: 'Salmon',
+    type: 'vegetable',
+  },
+  {
+    name: 'Vegetable Stock',
+    type: 'stock',
+  },
+  {
+    name: 'Canned Minestrone',
+    type: 'soup',
+  },
+  {
+    name: 'Mustard',
+    type: 'condiment',
   },
 ]
 

@@ -4,7 +4,7 @@ module.exports = router
 const {requireToken, isAdmin} = require('./gatekeep')
 
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, async (req, res, next) => {
   try{
     const foods = await Food.findAll()
     res.json(foods)

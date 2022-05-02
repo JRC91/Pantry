@@ -13,7 +13,7 @@ const Navbar = (props) => {
 
 return  (
   <div>
-    <h1>FS-App-Template</h1>
+    <h1>Food-Test-App</h1>
     <nav>
       {props.isLoggedIn ? (
         <div>
@@ -22,7 +22,7 @@ return  (
           <Link to='/foodselection'>Food Stock</Link>
           <Link to='/pantry'>Pantry</Link>
           <Link to='/recipemaker'>Make a Recipe</Link>
-          <Link to='/recipes'>See Avaiable Recipes</Link>
+          <Link to='/recipes'>See Available Recipes</Link>
           <a href="#" onClick={props.handleClick}>
             Logout
           </a>

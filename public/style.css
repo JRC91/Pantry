@@ -68,10 +68,40 @@ span {
   outline: none;
   font-size: 15px;
 }
-
+.entryForm {
+  text-align: center;
+  width: 70%;
+}
 .content {
   padding: 0 18px;
   overflow: hidden;
   background-color: #f1f1f1;
   text-align: center;
+}
+.foodListAll {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  text-align: center;
+  width: 70%;
+}
+.foodContainer {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  text-align: center;
+}
+
+.foodItem {
+  border: 3px solid #555;
+  box-shadow: 0 30px 40px rgba(0, 0, 0, 0.1);
+
+  border-radius: 25px;
+  width: 160px;
+  height: 160px;
+  position: relative;
+  left: 130px;
+  bottom: -15px;
 }

@@ -24,6 +24,7 @@ const Recipe = db.define('recipe', {
   },
   vidUrl: {
     type: Sequelize.STRING,
+    defaultValue: '<iframe width="560" height="315" src="https://www.youtube.com/embed/Kpf2ylHvGvcwadwadawdawd1" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
   },
   guide: {
     type: Sequelize.TEXT,

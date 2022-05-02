@@ -45,9 +45,12 @@ router.post('/:id/pantry/add', requireToken, async (req, res, next) => {
     });
     let pantry = await User.findOne({
       where: {id: req.params.id},
-      include: Food
-    })
-    res.send(pantry.food);
+      include: {
+        model: Food,
+        where: {id: foodId },
+    }
+  })
+    res.send(pantry.food[pantry.food.length-1]);
   } catch (err) {
     next(err);
   }

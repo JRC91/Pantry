@@ -1,15 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import { setPantryThunk } from '../store/pantry'
 
 /**
  * COMPONENT
  */
 export const Home = props => {
-  const {username} = props
+  const {user} = props
 
+  React.useEffect( () => {
+    props.fetchPantry(user.id)
+  }, [])
   return (
     <div>
-      <h3>Hello, {username}</h3>
+      <h3>Hello, {user.username}</h3>
       <p>You currently have {props.pantry.length} items in your pantry.</p>
     </div>
 
@@ -19,11 +23,15 @@ export const Home = props => {
 /**
  * CONTAINER
  */
-const mapState = state => {
+ const mapState = state => {
   return {
-    username: state.auth.username,
+    user: state.auth,
     pantry: state.pantry
   }
 }
 
-export default connect(mapState)(Home)
+const mapDispatchToProps = (dispatch) => ({
+  fetchPantry: (id) => dispatch(setPantryThunk(id))
+})
+
+export default connect(mapState, mapDispatchToProps)(Home)

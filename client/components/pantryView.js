@@ -53,11 +53,11 @@ export function Pantry(props) {
       }
     }, []);
 
-  useEffect((previousState) => {
-    if (previousState !== props.pantry) {
-      setPantry(props.pantry || []);
-    }
-  });
+  // useEffect((previousState) => {
+  //   if (previousState !== props.pantry) {
+  //     setPantry(props.pantry || []);
+  //   }
+  // });
 
 
 
@@ -65,15 +65,15 @@ export function Pantry(props) {
     return <h2>Pantry Empty</h2>;
   }
   return (
-    <div className="foodList">
+    <div className="foodListAll">
       {!props.auth.length
         ? pantry.map((food) => {
             return (
-              <div key={food.id}>
+              <div className='foodContainer' key={food.id}>
                 <img src={food.imageUrl} className="photo" />
                 <h4>
                     {` ${food.name}`}
-                  <input
+                  {/* <input
           onChange={handleChange}
           type="number"
           name={food.id}
@@ -81,12 +81,12 @@ export function Pantry(props) {
           max={`${food.quantity}`}
           placeholder="1"
           value={quantity}
-        ></input>
-         <button type="submit" onClick={ () =>{
+        ></input> */}
+         {/* <button type="submit" onClick={ () =>{
 
            handleSubmit(food)}}>
           Change Amount
-        </button>
+        </button> */}
                   <button
                     type="submit"
                     className="delete"
