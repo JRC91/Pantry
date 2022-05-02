@@ -7,15 +7,15 @@ import pantry from './pantry'
 import recipes from './recipes'
 import food from './food'
 import user from './user'
-
+import singleRecipe from './singleRecipe'
 
 const reducer = combineReducers({
   auth:auth,
   pantry: pantry,
   food: food,
   user: user,
-  recipes: recipes
-
+  recipes: recipes,
+  recipe: singleRecipe
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

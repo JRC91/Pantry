@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Recipe, Ingredient} = require('../db')
+const {Recipe, Ingredient, Food} = require('../db')
 module.exports = router
 const {requireToken, isAdmin} = require('./gatekeep')
 
@@ -11,9 +11,9 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
   catch(err) {next(err)}
 })
 
-router.get('/:id', requireToken, isAdmin, async (req, res, next) => {
+router.get('/:id', requireToken, async (req, res, next) => {
   try{
-    const recipe = await Recipe.findByPk(req.params.id)
+    const recipe = await Recipe.findByPk(req.params.id, {include: Food})
     res.json(recipe)
   }
   catch(err) {next(err)}

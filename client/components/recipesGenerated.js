@@ -61,16 +61,14 @@ class RecipeGenerator extends React.Component {
           <div key = {key}>
         <button type='button' onClick={()=>this.accordionToggle(key)} className ='collapsible'>
         Recipe: {recipe.name}
+        <h3>Percentage Acquired: {hasFood !==0 ? Math.floor((hasFood/recipe.food.length)*100) : '0'}%</h3>
         </button>
         <form style={{display: 'none'}} ref={accordionContent => this.accordionContent[key] = accordionContent} >
-
-        <h3>Percentage Acquired: {hasFood !==0 ? Math.floor((hasFood/recipe.food.length)*100) : '0'}%</h3>
-
-
-
+          <h5>{recipe.description}</h5>
         <h5>Ingredients: {recipe.food.map((ingredient) => <span><p key={ingredient.id}>{ingredient.name}</p></span>)}</h5>
         {noHasFood > 0 ? <p>You are missing {IngredientsNeeded.map((h) => `${h.name} `)} </p> : <p>You have everything needed!</p> }
         </form>
+        <Link to={`/recipes/${recipe.id}`}> Check it out!</Link>
         </div>
         )
       })}
