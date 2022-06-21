@@ -1,6 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { setPantryThunk } from '../store/pantry'
+import { connect } from 'react-redux';
+
+
 
 /**
  * COMPONENT

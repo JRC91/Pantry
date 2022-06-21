@@ -19,13 +19,13 @@ export class RecipeCreator extends React.Component {
         guide: '',
         equipment: '',
         course: 'main',
-        day: 'breakfast',
-
+        day: 'breakfast'
       },
       ingredients: [],
       err: false,
       errmessage: '',
       foods: [],
+      completed: false,
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -77,22 +77,66 @@ export class RecipeCreator extends React.Component {
     })
   }
 
-  handleSubmit(){
-    let recipe = this.state.recipe
-    recipe.userId = this.props.auth.id
-    let ingredients = this.state.ingredients
-    this.props.addRecipe(recipe, ingredients)
+  clearForm () {
+    this.setState({
+      recipe:{
+        name: '',
+        description: '',
+        cuisine: '',
+        duration: 0,
+        imgUrl: '',
+        vidUrl: '',
+        guide: '',
+        equipment: '',
+        course: 'main',
+        day: 'breakfast'
+      }
+    })
+  }
 
+  handleSubmit(evt){
+    evt.preventDefault()
+    let {recipe, ingredients} = this.state
+    if(recipe.name === '' || recipe.guide === '' ) {
+      this.setState({
+        err:true,
+        errmessage: 'At the minimumm the name and recipe guide must be filled in.'
+      })
+      return
+    }
+    if(ingredients == 0){
+      this.setState({
+        err:true,
+        errmessage: 'Need atleast one ingredient added.'
+      })
+      return
+    }
+    recipe.userId = this.props.auth.id
+    this.props.addRecipe(recipe, ingredients)
+    this.clearForm()
+    this.setState({completed:true})
   }
 
 
   render () {
     const recipe = this.state.recipe
-    console.log(recipe)
+
     return (
 
       <div className="entryForm">
-         <form onChange={this.handleChange}>
+         {this.state.err ?
+         alert(this.state.errmessage) : <></>}
+        {this.state.err ?
+         this.setState({err: false}) : ''}
+
+        {this.state.completed ?
+         alert('Recipe Submitted Successfully!') : <></>}
+        {this.state.completed ?
+         this.setState({
+           ingredients: [],
+           completed: false}) : ''}
+
+      <form onChange={this.handleChange}>
       <span><h3>Recipe Name:</h3></span>
       <span><input type="text" name="name" value={recipe.name} /></span> <br/>
 
@@ -151,6 +195,7 @@ export class RecipeCreator extends React.Component {
      {/* <span><button type="button" onClick={this.handleSubmit}>Submit</button> </span> */}
       </form>
       <div className='foodContainer' >
+
      {this.state.foods ? this.state.foods.map((food) => (
                 <div className="foodItem" key={food.id}>
                   <img src={food.imageUrl} className="photo" />
@@ -188,7 +233,8 @@ export class RecipeCreator extends React.Component {
 function mapStateToProps (state) {
   return {
     foods: state.food,
-    auth: state.auth
+    auth: state.auth,
+
   }
 }
 function mapDispatchToProps (dispatch) {

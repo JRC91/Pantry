@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const initialstate = {};
 
-const FetchUser = 'FETCH_User';
+const FetchUser = 'FETCH_USER';
 const DeleteUser = 'DELETE_USER';
 const UpdateUser = 'UPDATE_USER';
 

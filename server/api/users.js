@@ -37,7 +37,7 @@ router.get('/:id/pantry', requireToken, async (req, res, next) => {
 
 router.post('/:id/pantry/add', requireToken, async (req, res, next) => {
   try {
-    console.log(req.body, 'this is reqbody for Pantry Add');
+
     let {foodId} = req.body
     let newFood = await Pantry.create({
       foodId: foodId,
@@ -58,7 +58,7 @@ router.post('/:id/pantry/add', requireToken, async (req, res, next) => {
 
 router.delete('/:id/pantry/:foodId', requireToken, async (req, res, next) => {
   try {
-    console.log(req.params, 'this is reqbody for delete Pantry');
+
 
     let byeFood = await Pantry.findOne({where: {
       userId: req.params.id,
@@ -74,7 +74,7 @@ router.delete('/:id/pantry/:foodId', requireToken, async (req, res, next) => {
 
 router.put('/:id/pantry/', requireToken, async (req, res, next) => {
   try {
-    console.log(req.body, 'this is reqbody');
+
 
     let changedFood = await Pantry.findOne({where: {
       userId: req.params.id,
@@ -101,18 +101,17 @@ router.get('/:id/curated', requireToken, async (req, res, next) => {
         left: true,
         include: [{
           model:User,
-          where: {id: req.params.id},
+          where: {id: number},
           required: false,
           attributes: ['id'],
-          include: [{
-            model: Food,
-            required: true,
-            attributes: []
-          }]
+
         }],
       }],
+
      })
-     console.log(recipes)
+
+    console.log(recipes)
+
      res.send(recipes)
   }
   catch (err) {
@@ -122,3 +121,4 @@ router.get('/:id/curated', requireToken, async (req, res, next) => {
 //limit and offset might be useful if the database grows more
 
 
+//SELECT * From recipes JOIN ingredients ON 'recipes.id' = 'ingredients.recipeId' JOIN food ON 'ingredients.foodId' = 'food.id' JOIN pantries ON 'food.id' = 'pantries.foodId' JOIN users ON 'users.id' = 'pantries.userId

@@ -39,11 +39,13 @@ class RecipeGenerator extends React.Component {
   }
 
   render () {
-    if(!this.state.recipes.length){return <h1>No Relevant Recipes Found</h1>}
+    if(!this.state.recipes.length){
+      return <h1>No Relevant Recipes Found</h1>}
+
     return (
       <div className="content">
       {this.state.recipes.map((recipe, key) => {
-        console.log(recipe)
+
         let hasFood = 0;
         let noHasFood = 0;
         let IngredientsNeeded = []
@@ -57,6 +59,7 @@ class RecipeGenerator extends React.Component {
             noHasFood++
           }
         }
+        //This is a nested return, the percentage is calculated just before rendering
         return(
           <div key = {key}>
         <button type='button' onClick={()=>this.accordionToggle(key)} className ='collapsible'>
@@ -65,13 +68,26 @@ class RecipeGenerator extends React.Component {
         </button>
         <form style={{display: 'none'}} ref={accordionContent => this.accordionContent[key] = accordionContent} >
           <h5>{recipe.description}</h5>
-        <h5>Ingredients: {recipe.food.map((ingredient) => <span><p key={ingredient.id}>{ingredient.name}</p></span>)}</h5>
-        {noHasFood > 0 ? <p>You are missing {IngredientsNeeded.map((h) => `${h.name} `)} </p> : <p>You have everything needed!</p> }
+        <h5>Ingredients: {recipe.food.map((ingredient, index) =>
+        <span className="listSpan"><p key={ingredient.id}>{index == recipe.food.length-1 && recipe.food.length > 1 ?
+          `and ${ingredient.name}.` : `${ingredient.name},`
+        }</p></span>)}
+        </h5>
+        {noHasFood > 0 ? <p>You are missing {IngredientsNeeded.map((h, index) =>{
+        if(index == IngredientsNeeded.length-1 && IngredientsNeeded.length > 1){
+          return `and ${h.name}.`
+        }
+         else {return `${h.name}, `}
+        }
+        )} </p>
+        :
+        <p>You have everything needed!</p> }
         </form>
         <Link to={`/recipes/${recipe.id}`}> Check it out!</Link>
         </div>
         )
-      })}
+      }
+      )}
       </div>
     )
   }
