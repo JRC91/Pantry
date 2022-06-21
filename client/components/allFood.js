@@ -27,7 +27,7 @@ export function AllFood(props) {
        //already has the food being rendered, to shorten the process, I did a for loop with a break so that it won't go through the whole array if it doesn't have to
 
   const renderTheFood = () => {
-    console.log(props.pantry)
+
       let userAddedAlready = props.pantry
       let containsAll = props.foods.filter(i => {
         let none = false
@@ -43,7 +43,7 @@ export function AllFood(props) {
           return true
         }
       })
-      console.log('here?', containsAll)
+
       setRender(containsAll)
   }
 
@@ -63,7 +63,7 @@ export function AllFood(props) {
     const userId = props.auth.id;
 
     let newRender = renderFoods.filter((food) => food.id !== newPantry.id);
-    console.log(newRender)
+
       props.addToPantry(userId, newPantry.id);
       setRender(newRender)
     }

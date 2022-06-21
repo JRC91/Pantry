@@ -7,9 +7,7 @@ function SingleRecipe (props) {
 
 useEffect(() => {
   try{
-    console.log(props)
     const foodId = props.match.params.id
-    console.log(props)
     props.fetchRecipe(foodId)
   }
   catch (error) {

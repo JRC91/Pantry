@@ -5,11 +5,11 @@ const { User } = require("../db");
 
 const requireToken = async( req, res, next) => {
   try {
-    console.log(req.headers)
+
     const token = req.headers.authorization
     const user = await User.findByToken(token)
     req.user = user
-    console.log(req.user, 'what we seeing')
+
     next()
   }
   catch(err) {next(err)}

@@ -21,9 +21,9 @@ router.get('/:id', requireToken, async (req, res, next) => {
 
 router.post('/add', requireToken, async (req, res, next) => {
   try{
-    console.log(req.body, 'reqbody for create Recipe')
+
     const recipe = await Recipe.create(req.body.recipe)
-    console.log(recipe, 'can I see')
+
     if(req.body.ingredients.length){
       req.body.ingredients.map(async (ingredient) => {
         if(ingredient !== null){

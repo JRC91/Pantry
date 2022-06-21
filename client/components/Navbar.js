@@ -13,7 +13,7 @@ const Navbar = (props) => {
 
 return  (
   <div>
-    <h1>Food-Test-App</h1>
+    <h1>Pantry</h1>
     <nav>
       {props.isLoggedIn ? (
         <div>
